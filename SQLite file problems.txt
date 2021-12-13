@@ -1,0 +1,10 @@
+draft_player
+SELECT *, count(idPlayer) as n from draft_player GROUP BY idPlayer HAVING n>1;
+SELECT * from draft_player where idPlayer = 717;
+-- WITH CTE AS 
+-- (
+--     SELECT idPlayer, ROW_NUMBER() OVER ( PARTITION BY idPlayer ORDER BY idPlayer ) AS row_num FROM draft_player
+-- )
+-- DELETE FROM cte
+-- WHERE row_num > 1;
+131 duplicate idPlayers.
