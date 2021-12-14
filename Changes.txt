@@ -11,3 +11,6 @@ Referee to Game should be m to m.
 
 Game: get rid of the nameArena attribute because  
     it could be obtained from JOIN idTeam ON idTeamHome = idTeam;
+
+Team to Game should be many to 1. This way we get rid of the face in table which doesn't make sense because 
+game already has the two teamIDs.
