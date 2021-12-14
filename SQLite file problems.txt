@@ -1,10 +1,13 @@
-draft_player
-SELECT *, count(idPlayer) as n from draft_player GROUP BY idPlayer HAVING n>1;
-SELECT * from draft_player where idPlayer = 717;
--- WITH CTE AS 
--- (
---     SELECT idPlayer, ROW_NUMBER() OVER ( PARTITION BY idPlayer ORDER BY idPlayer ) AS row_num FROM draft_player
--- )
--- DELETE FROM cte
--- WHERE row_num > 1;
-131 duplicate idPlayers.
+nba_player: change instead of idSeason, we will store the number of season that player has played. 
+            Therefore we would get rid of the plays during relation from nbaPLaer to season. 
+            It does not affect the tables because there wasn't the table for that relation.
+            also could not reference to team.
+
+non_nbaPlayer: change attributes from type organization, name organization to height and weight. 
+            Also make primary key idPlayer because there are players with the same name.
+
+Referee to Game should be m to m. 
+    Then we have a new table: oversees(idGame, idReferee1, idReferee2, idReferee3)
+
+Game: get rid of the nameArena attribute because  
+    it could be obtained from JOIN idTeam ON idTeamHome = idTeam;
