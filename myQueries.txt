@@ -19,3 +19,82 @@ SELECT cityName, nickname, count(WL_home) as numWins FROM GAME JOIN team ON idTe
 GROUP BY idTeam
 ORDER BY numWins DESC
 LIMIT 3;
+
+------------------------------------------------------
+Query 3:Show me the three teams that have the all time most wins and the number of wins
+SELECT cityName, nickname, count(WL_home) as numWins FROM (
+SELECT * FROM GAME JOIN team ON idTeamHome=idTeam WHERE WL_home="W"
+UNION
+SELECT * FROM GAME JOIN team ON idTeamAway=idTeam WHERE WL_away="W"
+)
+GROUP BY idTeam
+ORDER BY numWins DESC
+LIMIT 3;
+
+
+
+------------------------------------------------------
+Query 4:Show me the three players that have played the most seasons and the number of seasons they have played:
+SELECT namePlayer, seasons FROM nba_player NATURAL JOIN nba_player_stats 
+group by idPlayer ORDER BY seasons DESC LIMIT 3
+
+------------------------------------------------------
+Query 5: Show me all Referees that have oversaw ever game: (it is empty and takes a lot of time but it is division)
+SELECT * FROM referee WHERE NOT EXISTS
+(
+	SELECT idGame FROM game
+	EXCEPT
+	SELECT idGame FROM oversee WHERE oversee.idReferee=referee.idReferee
+);
+
+-----------------------------------------------------
+Query 5: Show me all Players that average any double-double: (it is empty and takes a lot of time but it is division)
+SELECT namePlayer FROM nba_player NATURAL JOIN nba_player_stats 
+WHERE points>=10 AND rebounds>=10
+OR points>=10 AND assists>=10
+OR rebounds>=10 AND assists>=10;
+
+
+-----------------------------------------------------
+Query 6: Show me all Players that average a triple-double: (it is empty and takes a lot of time but it is division)
+SELECT namePlayer FROM nba_player NATURAL JOIN nba_player_stats 
+WHERE points>=10 AND rebounds>=10 AND assists>=10;
+
+-----------------------------------------------------
+Query 7: Show the Player that is closer to average a triple-double: (it is empty and takes a lot of time but it is division)
+SELECT * FROM nba_player NATURAL JOIN nba_player_stats 
+WHERE points>=9 AND rebounds>=9 AND assists>=9 LIMIT 1;
+
+-----------------------------------------------------
+Query 8: Show me the arena that has hold more games:
+SELECT arenaName, count(idGame) as numGames FROM arena NATURAL JOIN team JOIN game ON idTeamHome=idTeam NATURAL JOIN game_stats 
+GROUP BY arenaName
+ORDER BY numGames DESC 
+LIMIT 1;
+
+
+
+-----------------------------------------------------
+Query 9: Show me the arena that has recieved more points in total:
+SELECT arenaName, sum(PTS_away) as numPTSRecieved FROM arena NATURAL JOIN team JOIN game ON idTeamHome=idTeam NATURAL JOIN game_stats 
+GROUP BY arenaName
+ORDER BY numPTSRecieved DESC 
+LIMIT 1;
+
+
+-----------------------------------------------------
+Query 9: Show me the arena that recieves the least number of points in all games combined:
+SELECT arenaName, avg(PTS_away) as numPTSRecieved FROM arena NATURAL JOIN team JOIN game ON idTeamHome=idTeam NATURAL JOIN game_stats 
+GROUP BY arenaName
+ORDER BY numPTSRecieved
+LIMIT 1;
+
+
+
+-----------------------------------------------------
+Query 10: Show me the team that makes the most points in all games combined:
+SELECT cityName, nickname, avg(PTS_home) FROM arena NATURAL JOIN team JOIN game ON idTeamHome=idTeam NATURAL JOIN game_stats 
+GROUP BY arenaName
+ORDER BY avg(PTS_home) DESC
+LIMIT 1;
+
