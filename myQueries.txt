@@ -1,0 +1,21 @@
+Query 1: Show me the three teams that have the most wins as an away team:
+SELECT cityName, nickname, count(WL_away) as numWins FROM GAME JOIN team ON idTeamAway=idTeam WHERE WL_away = "W" 
+GROUP BY idTeam
+ORDER BY numWins DESC
+LIMIT 3;
+
+SELECT cityName, nickname FROM GAME JOIN team ON idTeamAway=idTeam WHERE WL_away = "W" 
+GROUP BY idTeam
+ORDER BY count(WL_away) DESC
+LIMIT 3;
+------------------------------------------------------
+Query 2:Show me the three teams that have the most wins as an away team:
+SELECT cityName, nickname, count(WL_home) as numWins FROM GAME JOIN team ON idTeamHome=idTeam WHERE WL_home = "W" 
+GROUP BY idTeam
+ORDER BY numWins DESC
+LIMIT 3;
+
+SELECT cityName, nickname, count(WL_home) as numWins FROM GAME JOIN team ON idTeamHome=idTeam WHERE WL_home = "W" 
+GROUP BY idTeam
+ORDER BY numWins DESC
+LIMIT 3;
