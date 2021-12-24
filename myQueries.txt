@@ -113,3 +113,9 @@ SELECT firstName, lastName, sum(PTS_home+PTS_away) as numPointsSeen FROM referee
 GROUP BY idReferee
 ORDER BY numPointsSeen DESC
 LIMIT 1;
+
+Query 26: Show me the top ten countries with most players in the NBA and the number of players of each country.
+SELECT countryName, count(idPlayer) as numPlayers FROM nba_player JOIN country on nba_player.country=countryName
+GROUP BY countryName
+ORDER BY numPlayers DESC
+LIMIT 10;
