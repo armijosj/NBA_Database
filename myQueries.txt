@@ -127,3 +127,91 @@ WHERE numberRound = 1 AND numberRoundPick = 1;
 Query 28: What is the average point of the 1st rounf 30th pick of all draft:
 SELECT  avg(points)  FROM draft_player NATURAL JOIN nba_player NATURAL JOIN nba_player_stats 
 WHERE numberRound = 1 AND numberRoundPick = 30;
+
+
+
+
+
+-------------------- NELSON QUERIES -------------------------------
+
+Query 1: 
+	Find all players who play for Dallas more than 10 years order desc
+	SELECT idPlayer as id, namePlayer as name, toYear - fromYear as playIn from nba_player 
+	natural join team 
+	where cityName = 'Dallas' and playIn > 10
+	order by playIn DESC
+
+Query 2: 
+	Counter the number of players from each country order by number of players desc
+	Select idPlayer as id, namePlayer as name, toYear - fromYear as playedYear from nba_player
+	where isActive = 'Active'
+	order by toYear - fromYear DESC
+	limit 10
+
+Query 3: 
+	Find the players that attend more than 7 all-star games
+	CREATE VIEW "Q3" AS Select idPlayer as id, namePlayer as name, toYear - fromYear as playedYear from nba_player
+	where isActive = 'Active'
+	order by toYear - fromYear DESC
+	limit 10
+
+Query 4: 
+	The team has the most all-star players in history desc order by all star player amount
+	Select idPlayer as id, namePlayer as name, toYear - fromYear as playedYear from nba_player
+	where isActive = 'Active'
+	order by toYear - fromYear DESC
+	limit 10
+
+Query 5: 
+	Find top 10 players with longest played years in NBA
+	Select idPlayer as id, namePlayer as name, toYear - fromYear as playedYear from nba_player
+	where isActive = 'Active'
+	order by toYear - fromYear DESC
+	limit 10
+
+Query 6: 
+	Find the team which can get the highest average mark in a game in current
+	SELECT count(idPlayer) as playerNumber, nickname as teamName, sum(points) from nba_player
+	natural join team
+	natural join nba_player_stats
+	where isActive ='Active'
+	group by nickname
+	order by sum(points) DESC
+
+Query 7: 
+	Find the top 5 overseas players with points who comes overseas and their team
+	SELECT idplayer as id, namePlayer, country, nickname, points from nba_player
+	natural join nba_player_stats
+	natural join team
+	where isActive ='Active' and country != 'USA'
+	order by points DESC limit 5
+
+Query 8: 
+	Use a formula that the overall points of a player as 
+	Ova = point*0.4 + assist*0.3 + rebound *0.3
+	Find the best player in NBA
+	SELECT idplayer as id, namePlayer, nickname, points*0.4+ assists*0.3 + rebounds*0.3  OVA from nba_player
+	NATURAL join nba_player_stats
+	natural join team
+	where isActive ='Active'
+	order by OVA DESC limit 5
+
+Query 9: 
+	Use a formula that the overall points of a team is sum of players status 
+	Ova = point*0.4 + assist*0.3 + rebound *0.3
+	Find the worst team in NBA
+	SELECT nickname as team, sum(points)*0.5+sum(rebounds)*0.4+ sum(assists)*0.3 as teamOVA FROM team
+	NATURAL JOIN nba_player_stats
+	natural JOIN nba_player
+	where isActive = 'Active'
+	group by team
+	order by teamOVA
+
+Query 10: 
+	Find the team get how many wins in their home in a certain season
+	Select nickname as team, count(WL_home = 'W') as homeWIN from team
+	NATURAL JOIN game 
+	NATURAL JOIN season 
+	where year = '2019' and team.idTeam = game.idTeamHome
+	group by team
+	order by homeWIN
