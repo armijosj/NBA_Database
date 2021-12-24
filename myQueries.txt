@@ -98,3 +98,12 @@ GROUP BY arenaName
 ORDER BY avg(PTS_home) DESC
 LIMIT 1;
 
+--------------------NEW QUERIES-----------------------
+
+Query 23: Show me the name of all nonNBA players that were not drafted:
+SELECT nameNonPlayer FROM nonNBA_player 
+EXCEPT
+SELECT nameNonPlayer FROM nonNBA_player JOIN draft_player ON idNonPlayer=idPlayer;
+
+Query 24: Show me the average weight of a drafted player:
+SELECT avg(weight) FROM nonNBA_player JOIN draft_player ON idNonPlayer=idPlayer;
