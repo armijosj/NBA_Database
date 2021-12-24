@@ -119,3 +119,11 @@ SELECT countryName, count(idPlayer) as numPlayers FROM nba_player JOIN country o
 GROUP BY countryName
 ORDER BY numPlayers DESC
 LIMIT 10;
+
+Query 27: What is the average points of the 1st round 1st pick of all draft:
+SELECT namePlayer, avg(points)  FROM draft_player NATURAL JOIN nba_player NATURAL JOIN nba_player_stats 
+WHERE numberRound = 1 AND numberRoundPick = 1;
+
+Query 28: What is the average point of the 1st rounf 30th pick of all draft:
+SELECT  avg(points)  FROM draft_player NATURAL JOIN nba_player NATURAL JOIN nba_player_stats 
+WHERE numberRound = 1 AND numberRoundPick = 30;
