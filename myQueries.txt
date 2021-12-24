@@ -131,7 +131,6 @@ WHERE numberRound = 1 AND numberRoundPick = 30;
 
 
 
-
 -------------------- NELSON QUERIES -------------------------------
 
 Query 1: 
