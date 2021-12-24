@@ -107,3 +107,9 @@ SELECT nameNonPlayer FROM nonNBA_player JOIN draft_player ON idNonPlayer=idPlaye
 
 Query 24: Show me the average weight of a drafted player:
 SELECT avg(weight) FROM nonNBA_player JOIN draft_player ON idNonPlayer=idPlayer;
+
+Query 25: Show me which referee has seen the most points:
+SELECT firstName, lastName, sum(PTS_home+PTS_away) as numPointsSeen FROM referee NATURAL JOIN oversee NATURAL JOIN game NATURAL JOIN game_stats
+GROUP BY idReferee
+ORDER BY numPointsSeen DESC
+LIMIT 1;
