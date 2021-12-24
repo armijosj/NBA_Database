@@ -125,5 +125,5 @@ SELECT namePlayer, avg(points)  FROM draft_player NATURAL JOIN nba_player NATURA
 WHERE numberRound = 1 AND numberRoundPick = 1;
 
 Query 28: What is the average point of the 1st rounf 30th pick of all draft:
-SELECT  avg(points)  FROM draft_player NATURAL JOIN nba_player NATURAL JOIN nba_player_stats 
+SELECT namePlayer,avg(points)  FROM draft_player NATURAL JOIN nba_player NATURAL JOIN nba_player_stats 
 WHERE numberRound = 1 AND numberRoundPick = 30;
